@@ -153,7 +153,7 @@ public final class BankCLI {
 		} else if(ob[0] instanceof Branch) {
 			tableWidth = 68;
 			printSeparator(tableWidth);
-			System.out.printf("|%-4s|%-20s|%-40s|" , "ID", "Name", "Location");
+			System.out.printf("|%-4s|%-20s|%-40s|" , "ID", "Name", "Location") ;
 		}
 		System.out.println("");
 

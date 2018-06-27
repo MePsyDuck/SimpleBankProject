@@ -59,7 +59,7 @@ public class BankController {
 		return newBranch.getBranchID();
 	}
 	
-	public int addAccount(AccountType type, int balance, int branchID, int customerID) {
+	public int addAccount(AccountType type, int balance, int branchID, int customerID) throws BalanceTooLowException{
 		Account newAccount = new Account(type, balance, branchID, customerID);
 		addTransaction(TransactionType.OPENING, balance, balance, newAccount.getAccountID(), true,"Self");
 		accounts.put(newAccount.getAccountID(), newAccount);
@@ -178,7 +178,7 @@ public class BankController {
 		return addBranch(branchName, branchLocation);
 	}
 	
-	public int addAccount(String inputs[]) {
+	public int addAccount(String inputs[]) throws BalanceTooLowException {
 		AccountType type = AccountType.parseAccountType(inputs[0]); 
 		int balance = Integer.parseInt(inputs[1]);
 		int branchID = Integer.parseInt(inputs[2]);

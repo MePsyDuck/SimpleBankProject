@@ -13,12 +13,15 @@ public class BankApp {
 		bank.addBranch("branchB","Tambaram");
 		bank.addCustomer("customerA","Avadi");
 		bank.addCustomer("customerB","Bangalore");
+		try {
 		bank.addAccount(AccountType.SAVINGS, 5000, 1, 1);
 		bank.addAccount(AccountType.CURRENT, 10000, 1, 1);
 		bank.addAccount(AccountType.SAVINGS, 3500, 2, 1);
 		bank.addAccount(AccountType.LOAN, 0, 2, 2);
 		bank.addAccount(AccountType.CURRENT, 8000, 1, 2);
-		
+		} catch (BalanceTooLowException e) {
+			BankCLI.successMessage(false, e.getMessage());
+		}
 		while(choice!=MenuChoice.EXIT) {
 			
 			switch(choice) {
@@ -38,8 +41,13 @@ public class BankApp {
 			case CUSTOM: choice = BankCLI.menu(BankCLI.customMenuChoices);
 						break;
 		
-			case ADDACCOUNT: BankCLI.successMessage(true, "New Account ID is " + bank.addAccount(BankCLI.addAccountMenu()));
-						choice = MenuChoice.ADD;
+			case ADDACCOUNT: try {
+							BankCLI.successMessage(true, "New Account ID is " + bank.addAccount(BankCLI.addAccountMenu()));
+						} catch (BalanceTooLowException e) {
+							BankCLI.successMessage(false, e.getMessage());
+						} finally {
+							choice = MenuChoice.ADD;
+						}
 						break;
 			
 			case ADDCUSTOMER: BankCLI.successMessage(true, "New CustomerID is " + bank.addCustomer(BankCLI.addCustomerMenu()));

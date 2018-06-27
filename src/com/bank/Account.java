@@ -12,7 +12,10 @@ public class Account {
 		return counter++;
 	}
 
-	public Account(AccountType accountType, int balance, int branchID, int customerID) {
+	public Account(AccountType accountType, int balance, int branchID, int customerID) throws BalanceTooLowException{
+		if(accountType.getMinimumBalance() > balance) {
+			throw new BalanceTooLowException("Opening Account");
+		}
 		this.accountID = Account.getNextID();
 		this.accountType = accountType;
 		this.balance = balance;
